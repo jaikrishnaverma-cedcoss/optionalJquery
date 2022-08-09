@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe</title>
+</head>
+<body>
+  <div class="container">
+    <p>This is JQuery</p>
+    <p>Get starts by just Tap on Box</p>
+    <p>First player starts as <b>Player X</b></p>
+    <p>And</p>
+    <p>Second Player as <b>Player 0</b></p>
+    <div class="table">
+        <table>
+            <tr>
+                <td id="00" onclick="tick(this)"></td>
+                <td id="01" onclick="tick(this)"></td>
+                <td id="02" onclick="tick(this)"></td>
+            </tr> 
+            <tr>
+                <td id="10" onclick="tick(this)"></td>
+                <td id="11" onclick="tick(this)"></td>
+                <td id="12" onclick="tick(this)"></td>
+            </tr> 
+            <tr>
+                <td id="20" onclick="tick(this)"></td>
+                <td id="21" onclick="tick(this)"></td>
+                <td id="22" onclick="tick(this)"></td>
+            </tr> 
+        </table>
+    </div>
+    <button id="reset">RESET</button>
+  </div>
+</body>
+<style>
+    .container
+    {
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    button{
+        padding: 10px;
+        background-color: rgb(28, 106, 209);
+        color: white;
+        border-radius: 5px;
+        font-size: 30px;
+        border: none;
+        margin-top: 20px;
+    }
+ p{
+    font-size: 22px;
+    color: #005a8b;
+ }
+    td{
+        border: 1px solid black;
+        width:80px;
+        height: 80px;
+        border-radius: 10px;
+        font-size: 55px;
+        font-weight: 600;
+        text-align: center;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var cnt=1;
+var ticArr=[[" "," "," "],[" "," "," "],[" "," "," "]];
+function tick(args)
+{
+
+    let id=args.id;
+    id=id.split('');
+    let id1=parseInt(id[0]);
+    let id2=parseInt(id[1])
+
+    if(ticArr[id1][id2]==" ")
+    {
+
+    if(cnt%2==0)
+    {
+    // args.innerText="O";
+    ticArr[id1][id2]="O";
+    }
+    else
+    {
+    // args.innerText="X";
+    ticArr[id1][id2]="X";
+    }
+    cnt++;
+    populate();
+    if(checkWin()!=-1)
+    {
+    
+    setTimeout(()=>{alert("The Match Win By "+checkWin())}, 100);
+  
+    }
+      console.log(ticArr);
+}
+  
+}
+function reset()
+{
+    for(let i=0;i<3;i++)
+    {
+        for(let j=0;j<3;j++)
+        {
+            
+           ticArr[i][j]=" ";
+        }
+    }
+    cnt=1;
+    populate();
+}
+
+function populate()
+{
+    for(let i=0;i<3;i++)
+    {
+        for(let j=0;j<3;j++)
+        {
+            
+            $("#"+i+""+j).text(ticArr[i][j]);
+        }
+    }
+
+}
+function checkWin()
+{
+    // debugger;
+    let emp=0;
+    for(let k=0;k<3;k++)
+    {
+        for(let j=0;j<3;j++)
+        {
+            
+           if(ticArr[k][j]!=" ")
+            emp++;
+        }
+    }
+    if(emp==9)
+      return "No One. Match Tied";
+      
+     for(let i=0;i<3;i++)
+    {
+      
+        
+        if((ticArr[i][0]=="X") && (ticArr[i][1]=="X") && (ticArr[i][2]=="X"))
+            return "X";
+        if((ticArr[i][0]=="O") && (ticArr[i][1]=="O") && (ticArr[i][2]=="O"))
+            return "O";
+        if((ticArr[0][i]=="X") && (ticArr[1][i]=="X") && (ticArr[2][i]=="X"))
+            return "X";
+        if((ticArr[0][i]=="O") && (ticArr[1][i]=="O") && (ticArr[2][i]=="O"))
+            return "O";
+        if((ticArr[0][0]=="X") && (ticArr[1][1]=="X") && (ticArr[2][2]=="X"))
+            return "X";
+        if((ticArr[0][0]=="O") && (ticArr[1][1]=="O") && (ticArr[2][2]=="O"))
+            return "O";
+        if((ticArr[0][0]=="X") && (ticArr[1][1]=="X") && (ticArr[2][2]=="X"))
+            return "X";
+        if((ticArr[0][2]=="O") && (ticArr[1][1]=="O") && (ticArr[2][0]=="O"))
+            return "O";
+        if((ticArr[0][2]=="X") && (ticArr[1][1]=="X") && (ticArr[2][0]=="X"))
+            return "X";
+       
+    }
+    return -1;
+}
+$("#reset").click(function()
+{
+    reset();
+})
+</script>
+<!-- <script src="tictoe.js"></script> -->
+</html>
